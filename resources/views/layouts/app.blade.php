@@ -27,7 +27,7 @@
 
         .sensor-shell {
             position: relative;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
         .sensor-shell::before,
