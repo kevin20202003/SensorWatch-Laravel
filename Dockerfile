@@ -14,4 +14,6 @@ ENV COMPOSER_MEMORY_LIMIT=-1
 RUN composer install --no-dev --no-scripts --optimize-autoloader
 
 EXPOSE 10000
-CMD php artisan serve --host=0.0.0.0 --port=10000
+
+# Ejecuta las migraciones en Supabase automáticamente y luego inicia el servidor
+CMD php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=10000
