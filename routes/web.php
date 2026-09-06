@@ -17,6 +17,10 @@ Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->name('login.perform');
 
+    Route::get('/login/verificar', [AuthController::class, 'showVerificationForm'])->name('login.verify.form');
+    Route::post('/login/verificar', [AuthController::class, 'verifyCode'])->name('login.verify');
+    Route::post('/login/reenviar-codigo', [AuthController::class, 'resendCode'])->name('login.resend');
+
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
     Route::post('/register', [AuthController::class, 'register'])->name('register.perform');
 });
