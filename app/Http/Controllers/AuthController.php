@@ -34,7 +34,13 @@ class AuthController extends Controller
             ]);
         }
 
-        $this->sendVerificationCode($user);
+        try {
+            $this->sendVerificationCode($user);
+        } catch (\Throwable $e) {
+            throw ValidationException::withMessages([
+                'correo_electronico' => 'No se pudo enviar el código de verificación. Revisa la configuración SMTP de Gmail en Render.',
+            ]);
+        }
 
         $request->session()->put('two_factor_user_id', $user->id_usuario);
         $request->session()->put('two_factor_remember', $request->boolean('remember'));
@@ -116,7 +122,13 @@ class AuthController extends Controller
             return redirect()->route('login');
         }
 
-        $this->sendVerificationCode($user);
+        try {
+            $this->sendVerificationCode($user);
+        } catch (\Throwable $e) {
+            throw ValidationException::withMessages([
+                'codigo_verificacion' => 'No se pudo reenviar el código. Revisa la configuración SMTP de Gmail en Render.',
+            ]);
+        }
 
         return back()->with('status', 'Se ha reenviado el código a tu correo.');
     }
